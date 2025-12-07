@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FLETXO - XT</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 50%,#0f172a 100%);
+  color:#fff;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  padding:20px;
+  overflow-x:hidden;
+}
+
+.bubbles{position:fixed;top:0;left:0;width:100%;height:100%;overflow:hidden;z-index:0;pointer-events:none;}
+.bubbles span{position:absolute;bottom:-150px;border-radius:50%;animation:rise 25s infinite ease-in;opacity:0.6;}
+.bubbles span:nth-child(1){width:80px;height:80px;left:5%;animation-duration:18s;background:radial-gradient(circle,#ff149380,#ff149340);}
+.bubbles span:nth-child(2){width:60px;height:60px;left:15%;animation-duration:22s;background:radial-gradient(circle,#00ffeacc,#00ffea40);}
+.bubbles span:nth-child(3){width:100px;height:100px;left:35%;animation-duration:26s;background:radial-gradient(circle,#6a5acdcc,#6a5acd40);}
+.bubbles span:nth-child(4){width:50px;height:50px;left:55%;animation-duration:20s;background:radial-gradient(circle,#ffff0080,#ffff0040);}
+.bubbles span:nth-child(5){width:90px;height:90px;left:75%;animation-duration:24s;background:radial-gradient(circle,#ff450080,#ff450040);}
+.bubbles span:nth-child(6){width:120px;height:120px;left:85%;animation-duration:30s;background:radial-gradient(circle,#00bfffcc,#00bfff40);}
+@keyframes rise{0%{transform:translateY(0) scale(1);opacity:0.6;}100%{transform:translateY(-110vh) scale(1.5);opacity:0;}}
+
+.container{width:100%;max-width:500px;position:relative;z-index:2;}
+.glass{background:rgba(255,255,255,0.1);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.2);border-radius:24px;box-shadow:0 8px 32px rgba(0,0,0,0.3);}
+.header{text-align:center;padding:20px;margin-bottom:20px;}
+.header h1{font-family:'Orbitron',sans-serif;font-size:clamp(1.2rem,5vw,1.8rem);font-weight:bold;background:linear-gradient(135deg,#ff1493,#00ffea);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:0 0 30px rgba(255,20,147,0.5);}
+
+.top-bar{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;margin-bottom:20px;}
+.period-box{font-size:clamp(0.8rem,3vw,1rem);font-weight:600;color:rgba(255,255,255,0.9);}
+.period-box span{color:#;}
+.timer-box{font-size:clamp(0.8rem,3vw,1rem)'',sans-serif;font-size:clamp(1.5rem,6vw,2rem);font-weight:bold;color:#00bfffcc;text-shadow:0 0 0px rgba(255,20,147,0.6);}
+
+.dashboard{padding:20px;margin-bottom:20px;}
+.dashboard-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;font-size:clamp(0.85rem,3.5vw,1rem);font-weight:600;border-bottom:1px solid rgba(255,255,255,0.1);}
+.dashboard-row:last-child{border-bottom:none;}
+.dashboard-row span:first-child{color:rgba(255,255,255,0.8);}
+
+.ball{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:1.2rem;font-weight:bold;color:#fff;box-shadow:0 4px 15px rgba(0,0,0,0.3);}
+.ball.small{width:32px;height:32px;font-size:0.9rem;}
+.ball.red{background:radial-gradient(circle at 30% 30%,#ff6b9d,#ff1493,#a0005a);}
+.ball.green{background:radial-gradient(circle at 30% 30%,#6bd36b,#22c55e,#006600);}
+.ball.purple{background:radial-gradient(circle at 30% 30%,#c4b5fd,#8b5cf6,#5b21b6);}
+
+.prediction-section{padding:24px;margin-bottom:20px;text-align:center;}
+.prediction-label{font-size:0.9rem;color:rgba(255,255,255,0.7);margin-bottom:16px;}
+
+.bigtext-container{width:160px;height:160px;margin:0 auto 20px;position:relative;}
+.bigtext{width:100%;height:100%;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:clamp(3rem,10vw,4rem);font-weight:900;background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.2);box-shadow:0 0 40px rgba(255,255,255,0.2);overflow:hidden;position:relative;}
+.bigtext.big{color:#ff1493;text-shadow:0 0 30px rgba(255,20,147,0.8);}
+.bigtext.small{color:#00ffea;text-shadow:0 0 30px rgba(0,255,234,0.8);}
+.bigtext .inner-bubble{position:absolute;border-radius:50%;background:rgba(255,255,255,0.2);animation:riseIn 8s infinite ease-in;}
+.bigtext .inner-bubble:nth-child(1){width:20px;height:20px;left:20%;bottom:-20px;animation-duration:6s;}
+.bigtext .inner-bubble:nth-child(2){width:25px;height:25px;left:50%;bottom:-25px;animation-duration:7s;}
+.bigtext .inner-bubble:nth-child(3){width:15px;height:15px;left:70%;bottom:-15px;animation-duration:5s;}
+@keyframes riseIn{0%{transform:translateY(0) scale(1);opacity:0.5;}100%{transform:translateY(-180px) scale(1.5);opacity:0;}}
+
+.number-circle{width:100px;height:100px;border-radius:50%;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:2rem;font-weight:bold;color:#fff;box-shadow:0 0 25px rgba(0,0,0,0.4);}
+
+.choice-buttons{display:flex;gap:0;border-radius:50px;overflow:hidden;margin-top:20px;}
+.choice-buttons button{flex:1;padding:16px 0;font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:bold;border:none;cursor:pointer;transition:all 0.3s;color:#fff;}
+.choice-buttons .big-btn{background:linear-gradient(135deg,#f59e0b,#d97706);border-radius:50px 0 0 50px;}
+.choice-buttons .small-btn{background:linear-gradient(135deg,#3b82f6,#2563eb);border-radius:0 50px 50px 0;}
+.choice-buttons button:hover{opacity:0.85;transform:scale(1.02);}
+
+.history-section{padding:16px;}
+.history-header{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;padding:12px;font-size:0.85rem;font-weight:bold;background:rgba(255,255,255,0.25);border-radius:12px;margin-bottom:8px;text-align:center;}
+.history-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;padding:12px;font-size:0.8rem;background:rgba(255,255,255,0.15);border-radius:12px;margin-bottom:6px;align-items:center;text-align:center;animation:scaleIn 0.3s ease-out;}
+@keyframes scaleIn{from{opacity:0;transform:scale(0.95);}to{opacity:1;transform:scale(1);}}
+.history-row .predicted-big{color:#;font-weight:600;}
+.history-row .predicted-small{color:#;font-weight:600;}
+.history-box{max-height:300px;overflow-y:auto;}
+
+.footer{text-align:center;padding:16px;font-size:0.8rem;color:rgba(255,255,255,0.5);font-style:italic;}
+</style>
+</head>
+<body>
+
+<div class="bubbles">
+  <span></span><span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<div class="container">
+  <div class="header glass">
+    <h1> ITACHI DEATH - TEAM </h1>
+  </div>
+
+  <div class="top-bar glass">
+    <div class="period-box">PERIOD PEDCTION NO - <span id="period">--</span></div>
+    <div class="timer-box" id="timer">--</div>
+  </div>
+
+  <div class="dashboard glass">
+    <div class="dashboard-row">
+      <span>PEDCTION NO</span>
+      <div id="resultBall" class="ball purple">-</div>
+    </div>
+    <div class="dashboard-row">
+      <span>OPPOSITE NO</span>
+      <div id="oppBall" class="ball purple">-</div>
+    </div>
+  </div>
+
+  <div class="prediction-section glass">
+    <div class="prediction-label">ITACHI DEATH - PLATEOM</div>
+    <div class="bigtext-container">
+      <div id="prediction" class="bigtext big">
+        <span class="inner-bubble"></span>
+        <span class="inner-bubble"></span>
+        <span class="inner-bubble"></span>
+        <span class="text">B</span>
+      </div>
+    </div>
+    <div id="numberCircle" class="number-circle ball red">5</div>
+    <div class="choice-buttons">
+      <button class="big-btn">BIGGG</button>
+      <button class="small-btn">SMALL</button>
+    </div>
+  </div>
+
+  <div class="history-section glass">
+    <div class="history-header">
+      <div>PERIOT</div>
+      <div>PEDICT</div>
+      <div>PEDICT NO</div>
+      <div>OPPOSITE</div>
+    </div>
+    <div id="historyBox" class="history-box"></div>
+  </div>
+
+<script>
+let lastResultPeriod = "";
+
+function getIST() {
+  const n = new Date();
+  const u = n.getTime() + n.getTimezoneOffset() * 60000;
+  return new Date(u + 5.5 * 3600000);
+}
+
+function getPeriod() {
+  const ist = getIST();
+  const y = ist.getFullYear();
+  const m = String(ist.getMonth() + 1).padStart(2, '0');
+  const dd = String(ist.getDate()).padStart(2, '0');
+  const minutes = ist.getHours() * 60 + ist.getMinutes();
+  return String(y) + m + dd + "1000" + (10001 + minutes - 330);
+}
+
+function getBallClass(n) {
+  if ([2, 4, 6, 8].includes(n)) return 'red';
+  if ([1, 3, 7, 9].includes(n)) return 'green';
+  return 'purple';
+}
+
+function updateTimer() {
+  const now = getIST();
+  const sec = now.getSeconds();
+  document.getElementById('timer').textContent = (60 - sec).toString().padStart(2, '0') + "";
+  document.getElementById('period').textContent = getPeriod().slice(-5);
+}
+
+function addToHistory(period, predicted, num, opp) {
+  const row = document.createElement('div');
+  row.className = 'table-row history-row';
+  row.innerHTML = `
+    <div>${period.slice(-5)}</div>
+    <div class="${predicted === 'BIGGG' ? 'predicted-big' : 'predicted-small'}">${predicted}</div>
+    <div><div class="ball small ${getBallClass(num)}">${num}</div></div>
+    <div><div class="ball small ${getBallClass(opp)}">${opp}</div></div>
+  `;
+  const box = document.getElementById('historyBox');
+  box.prepend(row);
+  if (box.children.length > 12) box.removeChild(box.lastChild);
+}
+
+function autoPredictRandom() {
+  const period = getPeriod();
+  if (period === lastResultPeriod) return;
+
+  const liveSide = Math.random() < 0.5 ? 'SMALL' : 'BIGGG';
+  const numbers = liveSide === 'BIGGG' ? [5, 6, 7, 8, 9] : [0, 1, 2, 3, 4];
+  const liveNum = numbers[Math.floor(Math.random() * numbers.length)];
+  const opp = 9 - liveNum;
+
+  const pred = document.getElementById('prediction');
+  pred.className = `bigtext ${liveSide.toLowerCase()}`;
+  pred.innerHTML = `
+    <span class="inner-bubble"></span>
+    <span class="inner-bubble"></span>
+    <span class="inner-bubble"></span>
+    <span class="text">${liveSide === 'BIGGG' ? 'B' : 'S'}</span>
+  `;
+
+  const resultBall = document.getElementById('resultBall');
+  resultBall.textContent = liveNum;
+  resultBall.className = `ball ${getBallClass(liveNum)}`;
+
+  const oppBall = document.getElementById('oppBall');
+  oppBall.textContent = opp;
+  oppBall.className = `ball ${getBallClass(opp)}`;
+
+  const numberCircle = document.getElementById('numberCircle');
+  numberCircle.textContent = liveNum;
+  numberCircle.className = `number-circle ball ${getBallClass(liveNum)}`;
+
+  addToHistory(period, liveSide, liveNum, opp);
+  lastResultPeriod = period;
+}
+
+setInterval(updateTimer, 1000);
+setInterval(autoPredictRandom, 1000);
+updateTimer();
+autoPredictRandom();
+</script>
+</body>
+</html>
